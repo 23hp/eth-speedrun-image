@@ -1,1 +1,1 @@
-# ETH-speedrun-devcontainer-template"
+# Cloud Development Image
