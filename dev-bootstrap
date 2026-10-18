@@ -2,15 +2,17 @@
 # 幂等,可重复执行;容器启动时自动在后台跑,也可手动运行
 SETUP=/etc/dev-setup
 
-if [ -f "$SETUP/Brewfile" ]; then
+BREWFILE="$HOME/dotfiles/brew/Brewfile"
+[ -f "$BREWFILE" ] || BREWFILE="$SETUP/Brewfile"
+if [ -f "$BREWFILE" ]; then
   echo "== brew bundle"
-  brew bundle --file="$SETUP/Brewfile"
+  brew bundle --file="$BREWFILE"
 fi
 
 if [ -f "$SETUP/mise.toml" ]; then
   mkdir -p "$HOME/.config/mise"
   # 只在首次复制;之后该文件归你(和 dotfiles)所有
-  [ -e "$HOME/.config/mise/config.toml" ] || cp "$SETUP/mise.toml" "$HOME/.config/mise/config.toml"
+  [ -e "$HOME/.config/mise/config.toml" ] || [ -L "$HOME/.config/mise/config.toml" ] || cp "$SETUP/mise.toml" "$HOME/.config/mise/config.toml"
   echo "== mise install"
   mise install
 fi
