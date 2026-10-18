@@ -11,5 +11,7 @@ sudo install -m 644 -o root -g root /authkeys-src/node /etc/ssh/authorized_keys/
 # 后台装包,不阻塞 sshd;flock 防止重复执行
 ( flock -n 9 || exit 0; dev-bootstrap ) 9>/tmp/bootstrap.lock >> "$HOME/.bootstrap.log" 2>&1 &
 
+env | grep -E '^(KUBERNETES_|POD_)' | sudo tee -a /etc/environment >/dev/null
+
 sudo mkdir -p /run/sshd
 exec sudo /usr/sbin/sshd -D -e
