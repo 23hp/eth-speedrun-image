@@ -11,11 +11,10 @@ USER vscode
 WORKDIR /home/vscode
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
-    HOMEBREW_NO_AUTO_UPDATE=1 \
     MISE_DATA_DIR=/home/vscode/.mise \
     PATH="/home/vscode/.mise/shims:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
-RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
- && brew install mise stow \
+RUN HOMEBREW_NO_AUTO_UPDATE=1 NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
+ && HOMEBREW_NO_AUTO_UPDATE=1 brew install mise stow \
  && brew cleanup
 
 USER root
